@@ -1,0 +1,8 @@
+.filter {
+  margin-bottom: 20px;
+}
+
+.filter select {
+  padding: 8px;
+  border-radius: 6px;
+}

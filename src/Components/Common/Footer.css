@@ -1,0 +1,168 @@
+.footer {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(18px);
+
+  border-top: 1px solid rgba(99, 102, 241, 0.12);
+
+  padding: 60px 0 25px;
+
+  animation: fadeUp 0.8s ease;
+}
+
+/* FADE ANIMATION */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* LAYOUT */
+.footer-container {
+  width: 85%;
+  max-width: 1000px;
+
+  margin: auto;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 60px;
+}
+
+/* BRAND */
+.footer-brand {
+  max-width: 300px;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: 800;
+  color: #4f46e5;
+  margin-bottom: 10px;
+}
+
+.footer-brand p {
+  font-size: 13.5px;
+  color: #475569;
+  line-height: 1.7;
+}
+
+/* SOCIAL CENTER */
+.social {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.social a {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255,255,255,0.9);
+
+  border: 1px solid rgba(99,102,241,0.15);
+
+  color: #4f46e5;
+
+  transition: 0.3s ease;
+
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+}
+
+.social a:hover {
+  transform: translateY(-5px) scale(1.1);
+  background: #4f46e5;
+  color: white;
+}
+
+/* LINKS */
+.footer-links {
+  display: flex;
+  gap: 50px;
+}
+
+.footer-links h4 {
+  font-size: 13px;
+  margin-bottom: 12px;
+  color: #0f172a;
+}
+
+.footer-links a {
+  display: block;
+  font-size: 13px;
+  color: #475569;
+  text-decoration: none;
+  margin-bottom: 8px;
+  transition: 0.25s ease;
+}
+
+.footer-links a:hover {
+  color: #4f46e5;
+  transform: translateX(3px);
+}
+
+/* BOTTOM */
+.footer-bottom {
+  width: 85%;
+  max-width: 1000px;
+
+  margin: 30px auto 0;
+
+  padding-top: 14px;
+
+  border-top: 1px solid rgba(99, 102, 241, 0.12);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 12.5px;
+
+  color: #64748b;
+}
+
+.meta {
+  display: flex;
+  gap: 15px;
+}
+
+.meta span {
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.meta span:hover {
+  color: #4f46e5;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}
