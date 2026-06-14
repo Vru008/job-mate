@@ -3,11 +3,11 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 
-const jobRoutes = require("./routes/jobRoutes");
-const aiRoutes = require("./routes/aiRoutes");
-const authRoutes = require("./routes/authRoutes");
-const applicationRoutes = require("./routes/applicationRoutes");
-const adminRoutes = require("./routes/adminRoutes");
+const jobRoutes = require("./Routes/jobRoutes");
+const aiRoutes = require("./Routes/aiRoutes");
+const authRoutes = require("./Routes/authRoutes");
+const applicationRoutes = require("./Routes/applicationRoutes");
+const adminRoutes = require("./Routes/adminRoutes");
 
 const Job = require("./Models/job");
 const User = require("./Models/user");
