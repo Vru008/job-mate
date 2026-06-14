@@ -97,6 +97,24 @@
   transform: translateY(-3px);
 }
 
+button.nav-cta {
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.nav-user {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  text-transform: capitalize;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-user:hover { color: #4f46e5; }
+
 /* HAMBURGER */
 .hamburger {
   display: none;

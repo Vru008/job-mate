@@ -1,137 +1,33 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import axios from "axios";
+import { useAuth } from "../../context/AuthContext";
+import { publicStats } from "../../api/jobs";
 import "./Home.css";
 
+const HOME_FOR = { seeker: "/jobs", recruiter: "/recruiter", admin: "/admin" };
+
 function Home() {
-
-  /* =========================
-     HERO STATS (your existing)
-  ========================= */
-  const [applications, setApplications] = useState(0);
-  const [interviews, setInterviews] = useState(0);
-  const [offers, setOffers] = useState(0);
-
-  const started = useRef(false);
-
-  /* =========================
-     JOB SYSTEM (NEW - INDEED STYLE)
-  ========================= */
-  const [jobs, setJobs] = useState([]);
-  const [search, setSearch] = useState("");
-
-  const API = "http://localhost:5000/api/jobs";
-
-  const fetchJobs = async () => {
-    try {
-      const res = await axios.get(API);
-      setJobs(res.data);
-    } catch (err) {
-      console.log("Error fetching jobs:", err);
-    }
-  };
+  const { user, ready } = useAuth();
+  const [stats, setStats] = useState(null);
 
   useEffect(() => {
-    fetchJobs();
+    publicStats().then(setStats).catch(() => {});
   }, []);
 
-  /* =========================
-     FILTERED JOBS (INDEED SEARCH)
-  ========================= */
-  const filteredJobs = jobs.filter((job) =>
-    job.title?.toLowerCase().includes(search.toLowerCase()) ||
-    job.company?.toLowerCase().includes(search.toLowerCase())
-  );
-
-  /* =========================
-     STATS ANIMATION (your existing)
-  ========================= */
-  useEffect(() => {
-
-    const handleScroll = () => {
-
-      const statsSection = document.querySelector(".stats-bar");
-
-      if (!statsSection) return;
-
-      const sectionTop = statsSection.getBoundingClientRect().top;
-
-      if (
-        sectionTop < window.innerHeight - 100 &&
-        !started.current
-      ) {
-
-        started.current = true;
-
-        let appCount = 0;
-        let interviewCount = 0;
-        let offerCount = 0;
-
-        const appInterval = setInterval(() => {
-
-          appCount += 100;
-
-          if (appCount >= 10000) {
-            appCount = 10000;
-            clearInterval(appInterval);
-          }
-
-          setApplications(appCount);
-
-        }, 20);
-
-        const interviewInterval = setInterval(() => {
-
-          interviewCount += 50;
-
-          if (interviewCount >= 5000) {
-            interviewCount = 5000;
-            clearInterval(interviewInterval);
-          }
-
-          setInterviews(interviewCount);
-
-        }, 20);
-
-        const offerInterval = setInterval(() => {
-
-          offerCount += 20;
-
-          if (offerCount >= 2000) {
-            offerCount = 2000;
-            clearInterval(offerInterval);
-          }
-
-          setOffers(offerCount);
-
-        }, 20);
-
-      }
-
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-
-    return () => window.removeEventListener("scroll", handleScroll);
-
-  }, []);
+  // Logged-in users go straight to their portal.
+  if (ready && user) {
+    return <Navigate to={HOME_FOR[user.role] || "/"} replace />;
+  }
 
   return (
-
     <div className="home">
-
-      {/* =========================
-          HERO SECTION (UNCHANGED)
-      ========================= */}
       <motion.section
         className="hero"
         initial={{ opacity: 0, y: 60 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-
         <div className="hero-glow"></div>
 
         <motion.div
@@ -140,98 +36,103 @@ function Home() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1 }}
         >
+          <span className="hero-badge">AI-powered job marketplace</span>
 
-          <span className="hero-badge">
-            Smart Career Management Platform
-          </span>
-
-          <h1>Manage Your Job Search Like a Pro 🚀</h1>
+          <h1>Where talent meets opportunity 🚀</h1>
 
           <p>
-            JobMate helps you track applications, schedule interviews,
-            monitor progress, and stay organized.
+            JobMate connects job seekers and recruiters in one place — browse
+            roles, apply in a click, and let AI sharpen your resume. Recruiters
+            post jobs and manage applicants effortlessly.
           </p>
 
           <div className="hero-actions">
-
-            <Link to="/freeacc" className="primary-btn">
-              Get Started
+            <Link to="/register" className="primary-btn">
+              Get Started — it's free
             </Link>
-
-            <Link to="/explorefeatures" className="ghost-btn">
-              Explore Features
+            <Link to="/login" className="ghost-btn">
+              Log in
             </Link>
-
           </div>
-
         </motion.div>
-
       </motion.section>
 
-      {/* =========================
-          NEW INDEED JOB SEARCH BAR
-      ========================= */}
-      <section className="job-search-section">
+      <section className="home-roles">
+        <div className="role-col">
+          <h3>For job seekers</h3>
+          <ul>
+            <li>Browse and apply to open roles</li>
+            <li>Track every application in one place</li>
+            <li>AI resume match score + career chatbot</li>
+          </ul>
+          <Link to="/register" className="role-link">Join as a seeker →</Link>
+        </div>
 
-        <h2>Find Your Dream Job 🔍</h2>
-
-        <input
-          type="text"
-          placeholder="Search jobs or companies..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="job-search-input"
-        />
-
+        <div className="role-col">
+          <h3>For recruiters</h3>
+          <ul>
+            <li>Post jobs in minutes</li>
+            <li>Review applicants with cover letters</li>
+            <li>Move candidates through your pipeline</li>
+          </ul>
+          <Link to="/register" className="role-link">Join as a recruiter →</Link>
+        </div>
       </section>
 
-      {/* =========================
-          JOB LIST (INDEED STYLE)
-      ========================= */}
-      <section className="job-list">
-
-        {filteredJobs.length === 0 ? (
-          <p>No jobs found</p>
-        ) : (
-          filteredJobs.map((job) => (
-            <div key={job._id} className="job-card">
-
-              <h3>{job.title}</h3>
-              <p><b>{job.company}</b></p>
-              <p>{job.location || "Remote"}</p>
-
-              <button className="apply-btn">
-                View Details
-              </button>
-
-            </div>
-          ))
-        )}
-
-      </section>
-
-      {/* =========================
-          STATS BAR (UNCHANGED)
-      ========================= */}
       <motion.section className="stats-bar">
-
         <div className="stat-box">
-          <h3>{applications}</h3>
-          <p>Applications Tracked</p>
+          <h3>{stats ? stats.jobs : "—"}</h3>
+          <p>Open jobs</p>
         </div>
-
         <div className="stat-box">
-          <h3>{interviews}</h3>
-          <p>Interviews Scheduled</p>
+          <h3>{stats ? stats.companies : "—"}</h3>
+          <p>Companies hiring</p>
         </div>
-
         <div className="stat-box">
-          <h3>{offers}</h3>
-          <p>Offers Received</p>
+          <h3>{stats ? stats.seekers : "—"}</h3>
+          <p>Job seekers</p>
         </div>
-
       </motion.section>
 
+      {/* HOW IT WORKS */}
+      <section className="home-how">
+        <h2>How it works</h2>
+        <div className="how-grid">
+          <div className="how-step">
+            <span className="how-num">1</span>
+            <h4>Create your account</h4>
+            <p>Sign up in seconds as a job seeker or a recruiter.</p>
+          </div>
+          <div className="how-step">
+            <span className="how-num">2</span>
+            <h4>Browse or post</h4>
+            <p>Seekers browse and filter roles; recruiters post jobs (AI writes the description).</p>
+          </div>
+          <div className="how-step">
+            <span className="how-num">3</span>
+            <h4>Apply or hire</h4>
+            <p>Apply in one click with an AI cover letter, or review applicants and move them through your pipeline.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* FEATURES */}
+      <section className="home-features">
+        <h2>Powered by AI, end to end</h2>
+        <div className="feat-grid">
+          <div className="feat-card"><h4>🎯 Resume match</h4><p>Score your fit for any job and see exactly what to improve.</p></div>
+          <div className="feat-card"><h4>✍️ Cover letters</h4><p>Generate a tailored cover letter the moment you apply.</p></div>
+          <div className="feat-card"><h4>📝 Job descriptions</h4><p>Recruiters get a full posting written from just a title.</p></div>
+          <div className="feat-card"><h4>💬 Career chatbot</h4><p>Ask anything about resumes, interviews, or visas.</p></div>
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
+      <section className="home-cta">
+        <h2>Ready to get started?</h2>
+        <p>Join JobMate today — it's free.</p>
+        <Link to="/register" className="primary-btn">Create your account</Link>
+      </section>
     </div>
   );
 }

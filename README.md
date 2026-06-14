@@ -1,70 +1,71 @@
-# Getting Started with Create React App
+# JobMate 🚀
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An **AI-powered job marketplace** that connects job seekers and recruiters in one place. Seekers browse and apply to jobs with AI assistance; recruiters post openings and manage applicants through a hiring pipeline; admins oversee the whole platform.
 
-## Available Scripts
+Built as a full-stack project: **React** frontend, **Node/Express** API, **MongoDB** database, and **Google Gemini** for the AI features.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## ✨ Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Three roles, one platform (role-based access control)
+- **Job Seeker** — browse and filter jobs, apply in one click with a cover letter, track every application's status, plus AI tools.
+- **Recruiter** — post and manage jobs, review applicants, and move them through the pipeline (Applied → Interview → Offer → Rejected).
+- **Admin** — platform-wide stats, plus manage (edit/delete) every user and job.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### AI features (Google Gemini)
+- **Resume ↔ Job match score** — paste or upload a resume (PDF) and get a 0–100 fit score with strengths, gaps, and suggested edits.
+- **AI cover-letter writer** — generate a tailored cover letter when applying.
+- **AI job-description generator** — recruiters get a full posting written from just a title.
+- **Career chatbot** — a floating assistant for resume, interview, and visa questions.
 
-### `npm test`
+### Engineering
+- JWT authentication with bcrypt-hashed passwords
+- Role-based route protection (frontend + backend) and resource ownership checks
+- Auto session-expiry handling, profiles with photo upload, live landing-page stats
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🛠️ Tech Stack
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+| Layer | Tech |
+|-------|------|
+| Frontend | React, React Router, Axios, Framer Motion |
+| Backend | Node.js, Express, JWT, bcrypt |
+| Database | MongoDB (Mongoose) |
+| AI | Google Gemini (`@google/generative-ai`) |
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🚀 Run locally
 
-### `npm run eject`
+### 1. Backend
+```bash
+cd server
+npm install
+# create server/.env (see server/.env.example) with:
+#   MONGO_URI=...        (MongoDB Atlas connection string)
+#   GEMINI_API_KEY=...   (free key from https://aistudio.google.com/)
+#   JWT_SECRET=...        (any long random string)
+node seed.js     # optional: creates demo accounts + sample jobs
+npm run dev      # starts on http://localhost:5000
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 2. Frontend
+```bash
+# from the project root, in a second terminal
+npm install
+npm start        # starts on http://localhost:3000
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Demo accounts (after running `node seed.js`)
+| Role | Email | Password |
+|------|-------|----------|
+| Seeker | `seeker@jobmate.com` | `Test@1234` |
+| Recruiter | `recruiter@jobmate.com` | `Test@1234` |
+| Admin | `admin@jobmate.com` | `Test@1234` |
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## ☁️ Deployment
+Free hosting: MongoDB Atlas + Render (backend) + Vercel (frontend). See [DEPLOYMENT.md](DEPLOYMENT.md) for step-by-step instructions.
