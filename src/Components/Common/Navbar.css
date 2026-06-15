@@ -83,6 +83,7 @@
 .nav-cta {
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
   color: white !important;
+  text-decoration: none;
 
   padding: 10px 18px;
 
@@ -194,6 +195,7 @@ button.nav-cta {
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
 
   color: white !important;
+  text-decoration: none;
 
   border-radius: 14px;
 

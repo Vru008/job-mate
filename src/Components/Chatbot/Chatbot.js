@@ -60,7 +60,7 @@ function Chatbot() {
           <div className="chat-header">
             <div>
               <strong>Career Assistant</strong>
-              <span className="chat-sub">Powered by Claude</span>
+              <span className="chat-sub">Powered by AI</span>
             </div>
             <button className="chat-close" onClick={() => setOpen(false)}>
               ✕
