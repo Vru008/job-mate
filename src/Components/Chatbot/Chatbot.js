@@ -19,6 +19,15 @@ function Chatbot() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, open]);
 
+  // On phones the chat covers the screen — stop the page behind it from scrolling.
+  useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 480px)").matches;
+    document.body.style.overflow = open && isMobile ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   const send = async () => {
     const text = input.trim();
     if (!text || loading) return;

@@ -1,5 +1,14 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(to right, #667eea, #764ba2);
+}
+
+/* On phones, iOS Safari zooms the page when you focus an input whose font is
+   under 16px. Forcing 16px on form controls keeps the layout from "jumping". */
+@media (max-width: 600px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
 }
